@@ -20,7 +20,7 @@ export const sendBookingEmail = async (booking) => {
     from: process.env.ADMIN_EMAIL, // Admin email
     to: booking.email,             // User-provided email
     subject: 'Booking Confirmation',
-    text: `Hi ${booking.name}, your booking for ${booking.date} at ${booking.time} has been confirmed!`,
+    text: `Hi ${booking.firstName} ${booking.lastName},\n\nYour booking for a ${booking.photoshootType} on ${booking.date} at ${booking.time} has been confirmed!\nLocation: ${booking.location}\n\nDescription: ${booking.description}\n\nThank you!`,
   };
 
   // Mail options for admin (booking notification)
@@ -28,7 +28,15 @@ export const sendBookingEmail = async (booking) => {
     from: process.env.ADMIN_EMAIL, // Admin email
     to: process.env.ADMIN_EMAIL,   // Admin email (could be different if needed)
     subject: 'New Booking Received',
-    text: `New booking from ${booking.name}. Date: ${booking.date}, Time: ${booking.time}, Email: ${booking.email}`,
+    
+    text: `New booking from ${booking.firstName} ${booking.lastName}.\n` +
+          `Phone Number: ${booking.phoneNumber}\n` +
+          `Photoshoot Type: ${booking.photoshootType}\n` +
+          `Date: ${booking.date}\n` +
+          `Time: ${booking.time}\n` +
+          `Email: ${booking.email}\n` +
+          `Location: ${booking.location}\n` +
+          `Description: ${booking.description}`,
   };
 
   try {
@@ -46,6 +54,58 @@ export const sendBookingEmail = async (booking) => {
     throw error;
   }
 };
+
+
+// import nodemailer from 'nodemailer';
+// import dotenv from 'dotenv';
+
+// // Load environment variables from .env file
+// dotenv.config();
+
+// // Create a transporter for sending emails
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail', // Use your email provider
+//   auth: {
+//     user: process.env.ADMIN_EMAIL, // Use admin email from .env file
+//     pass: process.env.ADMIN_PASS,  // Use admin email password from .env file
+//   },
+// });
+
+// // Function to send booking confirmation and admin notification emails
+// export const sendBookingEmail = async (booking) => {
+//   // Mail options for user (booking confirmation)
+//   const userMailOptions = {
+//     from: process.env.ADMIN_EMAIL, // Admin email
+//     to: booking.email,             // User-provided email
+//     subject: 'Booking Confirmation',
+//     text: `Hi ${booking.name}, your booking for ${booking.date} at ${booking.time} has been confirmed!`,
+//   };
+
+//   // Mail options for admin (booking notification)
+//   const adminMailOptions = {
+//     from: process.env.ADMIN_EMAIL, // Admin email
+//     to: process.env.ADMIN_EMAIL,   // Admin email (could be different if needed)
+//     subject: 'New Booking Received',
+//     text: `New booking from ${booking.name}. Date: ${booking.date}, Time: ${booking.time}, Email: ${booking.email}`,
+//   };
+
+//   try {
+//     // Send the user email (booking confirmation)
+//     const userInfo = await transporter.sendMail(userMailOptions);
+//     console.log('User email sent: ' + userInfo.response);
+
+//     // Send the admin email (booking notification)
+//     const adminInfo = await transporter.sendMail(adminMailOptions);
+//     console.log('Admin email sent: ' + adminInfo.response);
+
+//   } catch (error) {
+//     console.error('Error sending emails: ', error);
+//     // Throw error to handle it at a higher level if needed
+//     throw error;
+//   }
+// };
+
+
 
 
 
