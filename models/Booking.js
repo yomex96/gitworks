@@ -6,7 +6,7 @@ const bookingSchema = new mongoose.Schema({
   email: { type: String, required: true },
   phoneNumber: { type: String, required: true },
   photoshootType: { 
-    type: String, 
+    type: [String], 
     enum: ['Lifestyle Video Shoot', 'Brand Video Shoot', 'Pre-Wedding Photoshoot'], 
     required: true 
   },
@@ -35,7 +35,7 @@ bookingSchema.index({ location: '2dsphere' });
 export default mongoose.model('Booking', bookingSchema);
 
 
-//without google map
+// without google map
 // import mongoose from 'mongoose';
 
 // const bookingSchema = new mongoose.Schema({

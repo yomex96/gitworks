@@ -4,7 +4,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
-import bookingsRouter from './routes/bookings.js'; // Adjust the path if necessary
+import bookingsRouter from './routes/bookings.js'; 
+import contactRouter from './routes/contact.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -29,8 +30,11 @@ mongoose.connect(process.env.MONGO_URI)
     console.error("Failed to connect to MongoDB", err);
   });
 
+
 // Use the bookings router for the /api/bookings route
 app.use('/api/bookings', bookingsRouter);
+app.use('/api/contact', contactRouter); 
+
 
 // Example: Setup Nodemailer using email credentials from .env
 const transporter = nodemailer.createTransport({
